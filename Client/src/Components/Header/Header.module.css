@@ -1,13 +1,11 @@
-/* Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Main Header Container */
 .header__container {
-    background-color: #131921; /* Amazon dark navy */
+    background-color: #131921; 
     display: flex;
     gap: 10px;
     align-items: center;
@@ -16,7 +14,6 @@
     padding: 0 10px;
 }
 
-/* Logo + Deliver To */
 .logo__container {
     display: flex;
     align-items: center;
@@ -56,10 +53,9 @@
     color: white;
 }
 
-/* Search Bar */
 .search {
     display: flex;
-    align-items: stretch; /* Icon matches bar height */
+    align-items: stretch;
     flex: 1;
     border-radius: 5px;
     overflow: hidden;
@@ -89,7 +85,7 @@
     background: #febd69;
     color: #1a1a1a;
     cursor: pointer;
-    width: 45px; /* Same as Amazon */
+    width: 45px; 
     height: 100%;
     transition: background 0.2s;
 }
@@ -98,7 +94,6 @@
     background-color: #d49644;
 }
 
-/* Right Section */
 .order__container {
     display: flex;
     align-items: center;
@@ -136,7 +131,6 @@
     font-size: 14px;
 }
 
-/* Cart */
 .cart {
     position: relative;
     display: flex;
@@ -164,7 +158,6 @@
     justify-content: center;
 }
 
-/* Hover effects */
 .order__container a:hover,
 .delivery:hover,
 .logo__container:hover {
@@ -173,7 +166,6 @@
     padding: 2px;
 }
 
-/* Lower Header */
 .lower__container {
     background-color: #232f3e;
     color: white;
@@ -201,7 +193,6 @@
     padding: 2px 6px;
 }
 
-/* Responsive Design */
 @media (max-width: 1024px) {
     .delivery {
         display: none;
