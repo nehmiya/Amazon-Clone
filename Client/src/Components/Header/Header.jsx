@@ -32,10 +32,6 @@ function Header() {
           <div className={classes.search}>
             <select>
               <option value="">All</option>
-              <option value="electronics">Electronics</option>
-              <option value="books">Books</option>
-              <option value="fashion">Fashion</option>
-              <option value="home">Home</option>
             </select>
             <input type="text" placeholder="Search Amazon" />
             <FaSearch />
@@ -51,7 +47,6 @@ function Header() {
               />
               <select>
                 <option value="EN">EN</option>
-                <option value="ES">ES</option>
               </select>
             </div>
 

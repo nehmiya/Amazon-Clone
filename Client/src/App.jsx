@@ -6,6 +6,7 @@ import SignIn from './Pages/Auth/SignIn'
 import Cart from './Pages/Cart/Cart'
 import Payment from './Pages/Payment/Payment'
 import Orders from './Pages/Orders/Orders'
+import Results from './Pages/Results/Results'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path='/cart' element={<Cart />}/>
           <Route path='/payment' element={<Payment />}/>
           <Route path='/orders' element={<Orders />}/>
+          <Route path='/category/:categoryName' element={<Results />}></Route>
        </Route>
      </Routes>
 

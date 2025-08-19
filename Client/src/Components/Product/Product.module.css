@@ -67,7 +67,7 @@
 
 @media (max-width: 768px) {
   .button {
-    display: block;
+    display: block !important;
     position: relative;
     bottom: auto;
     left: auto;
