@@ -3,6 +3,7 @@ import { FaSearch, FaShoppingCart } from "react-icons/fa";
 import { SlLocationPin } from "react-icons/sl";
 import LowerHeader from "./LowerHeader";
 import classes from "./Header.module.css";
+import { Link } from "react-router";
 
 function Header() {
   return (
@@ -12,19 +13,19 @@ function Header() {
         <div className={classes.header__container}>
           {/* Logo + Deliver To */}
           <div className={classes.logo__container}>
-            <a href="/">
+            <Link to="/">
               <img
                 src="https://pngimg.com/uploads/amazon/amazon_PNG11.png"
                 alt="Amazon Logo"
               />
-            </a>
-            <span>
-              <SlLocationPin />
-            </span>
-            <div className={classes.delivery}>
-              <p>Deliver to</p>
-              <span>Ethiopia</span>
-            </div>
+            </Link>
+          </div>
+          <span>
+            <SlLocationPin />
+          </span>
+          <div className={classes.delivery}>
+            <p>Deliver to</p>
+            <span>Ethiopia</span>
           </div>
 
           {/* Search Bar */}
@@ -55,22 +56,22 @@ function Header() {
             </div>
 
             {/* Account */}
-            <a href="#">
+            <Link to={"/auth"}>
               <p>Hello, Sign in</p>
               <span>Account & Lists</span>
-            </a>
+            </Link>
 
             {/* Orders */}
-            <a href="#">
+            <Link to={"/orders"}>
               <p>Returns</p>
               <span>& Orders</span>
-            </a>
+            </Link>
 
             {/* Cart */}
-            <a to={'/cart'} className={classes.cart}>
+            <Link to={"/cart"} className={classes.cart}>
               <FaShoppingCart />
               <span>0</span>
-            </a>
+            </Link>
           </div>
         </div>
       </section>
