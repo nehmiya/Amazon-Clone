@@ -3,11 +3,12 @@ import { FaSearch, FaShoppingCart } from "react-icons/fa";
 import { SlLocationPin } from "react-icons/sl";
 import LowerHeader from "./LowerHeader";
 import classes from "./Header.module.css";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { DataContext } from "../DataProvider/DataProvider";
 
 function Header() {
   const [{basket}] = useContext(DataContext)
+  const totalItems = basket.reduce((sum, item) => sum + item.amount, 0);
 
   return (
     <div className={classes.header}>
@@ -68,7 +69,7 @@ function Header() {
             {/* Cart */}
             <Link to={"/cart"} className={classes.cart}>
               <FaShoppingCart />
-              <span>{basket.length}</span>
+              <span>{totalItems}</span>
             </Link>
           </div>
         </div>
