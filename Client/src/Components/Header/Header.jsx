@@ -10,7 +10,7 @@ function Header() {
   const [{basket}] = useContext(DataContext)
 
   return (
-    <>
+    <div className={classes.header}>
       {/* Top Header */}
       <section>
         <div className={classes.header__container}>
@@ -76,7 +76,7 @@ function Header() {
 
       {/* Lower Header */}
       <LowerHeader />
-    </>
+    </div>
   );
 }
 
