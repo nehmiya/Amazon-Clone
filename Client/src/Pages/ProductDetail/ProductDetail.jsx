@@ -29,7 +29,7 @@ function ProductDetail() {
 
   return (
     <div>
-      {loading ? <Loader /> : product.id && <ProductCard product={product} flex={true} renderDesc={true}/>}
+      {loading ? <Loader /> : product.id && <ProductCard product={product} flex={true} renderDesc={true} renderAdd={true}/>}
     </div>
   );
 }

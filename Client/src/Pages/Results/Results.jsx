@@ -48,7 +48,7 @@ function Results() {
           <hr className={classes.divider} />
           <div className={classes.products__container}>
             {category?.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product.id} product={product} renderAdd={true}/>
             ))}
           </div>
         </div>
