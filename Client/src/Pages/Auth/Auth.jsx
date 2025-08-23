@@ -1,8 +1,41 @@
-import React from "react";
+import React, { useState, useContext} from "react";
 import { Link } from "react-router-dom";
+import {auth} from '../../Utils/firebase'
+import {signInWithEmailAndPassword} from 'firebase/auth'
+import { DataContext } from "../../Components/DataProvider/DataProvider";
+import { Type } from "../../Utils/action.type";
 import classes from "./Auth.module.css";
 
+
 function Auth() {
+  const [email,setEmail]= useState('')
+  const [password,setPassword]= useState('')
+  const [error,setError]= useState('')
+
+
+  const [{user},dispatch] = useContext(DataContext)
+
+  console.log(user)
+
+  
+  const authHandler= async(e)=>{
+    e.preventDefault()
+    
+    if (e.target.name=="signin") {
+      // Sign In Logic
+      signInWithEmailAndPassword(auth, email, password).then((userCredential)=>{
+        dispatch({
+          type: Type.SET_USER,
+          user: userCredential.user
+        })
+      }).catch((err)=>{
+        console.log('Err:' ,err)
+      })
+    }
+
+  }
+
+
   return (
     <section className={classes.login}>
       <Link to={"/"}>
@@ -16,15 +49,29 @@ function Auth() {
         <form action="">
           <div>
             <label htmlFor="email">Email</label>
-            <input type="text" name="email" id="email" required />
+            <input
+              value={email}
+              type="text"
+              name="email"
+              onChange={(e) => setEmail(e.target.value)}
+              id="email"
+              required
+            />
           </div>
 
           <div>
             <label htmlFor="password">password</label>
-            <input type="password" name="password" id="password" required />
+            <input
+              type="password"
+              value={password}
+              name="password"
+              onChange={(e) => setPassword(e.target.value)}
+              id="password"
+              required
+            />
           </div>
 
-          <button>Sign In</button>
+          <button type="submit" name="signin" onClick={authHandler}>Sign In</button>
         </form>
         <p className={classes.terms}>
           By signing in, you agree to the Amazon Clone’s Conditions of Use,

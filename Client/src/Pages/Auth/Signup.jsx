@@ -1,8 +1,36 @@
-import React from 'react'
+import React, { useState , useContext} from "react";
 import { Link } from "react-router-dom";
+import { auth } from "../../Utils/firebase";
+import {createUserWithEmailAndPassword} from 'firebase/auth'
+import { DataContext } from "../../Components/DataProvider/DataProvider";
+import { Type } from "../../Utils/action.type";
 import classes from "./Auth.module.css";
 
 function Signup() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+    const [{user},dispatch] = useContext(DataContext)
+
+  const authHandler = (e) => {
+    e.preventDefault();
+
+    if (e.target.name == "signup") {
+        // sign up logic 
+        createUserWithEmailAndPassword(auth,email,password)
+        .then((userCredential)=>{
+            dispatch({
+                        type: Type.SET_USER,
+                        user: userCredential.user
+                    })
+
+        }).catch((err)=>{
+            console.log('Err:', err)
+        })
+    }
+  };
+
   return (
     <div>
       <section className={classes.signup}>
@@ -17,15 +45,31 @@ function Signup() {
           <form action="">
             <div>
               <label htmlFor="email">Email</label>
-              <input type="text" name="email" id="email" required />
+              <input
+                value={email}
+                type="text"
+                name="email"
+                onChange={(e) => setEmail(e.target.value)}
+                id="email"
+                required
+              />
             </div>
 
             <div>
               <label htmlFor="password">password</label>
-              <input type="password" name="password" id="password" required />
+              <input
+                type="password"
+                value={password}
+                name="password"
+                onChange={(e) => setPassword(e.target.value)}
+                id="password"
+                required
+              />
             </div>
 
-            <button>Sign Up</button>
+            <button type="submit" name="signup" onClick={authHandler}>
+              Sign Up
+            </button>
           </form>
           <p className={classes.terms}>
             By signing up, you agree to the Amazon Clone’s Conditions of Use,
@@ -44,4 +88,4 @@ function Signup() {
   );
 }
 
-export default Signup
+export default Signup;
