@@ -1,35 +1,44 @@
 import React, { useState , useContext} from "react";
-import { Link } from "react-router-dom";
+import { Link,Navigate, useNavigate } from "react-router-dom";
 import { auth } from "../../Utils/firebase";
 import {createUserWithEmailAndPassword} from 'firebase/auth'
 import { DataContext } from "../../Components/DataProvider/DataProvider";
 import { Type } from "../../Utils/action.type";
+import { ClipLoader } from "react-spinners";
 import classes from "./Auth.module.css";
 
 function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading,setLoading]= useState(false)
 
     const [{user},dispatch] = useContext(DataContext)
+    const navigate = useNavigate()
 
   const authHandler = (e) => {
     e.preventDefault();
+    setLoading(true)
 
     if (e.target.name == "signup") {
         // sign up logic 
         createUserWithEmailAndPassword(auth,email,password)
         .then((userCredential)=>{
             dispatch({
-                        type: Type.SET_USER,
-                        user: userCredential.user
-                    })
+                type: Type.SET_USER,
+                user: userCredential.user
+            })
+            // console.log(userCredential)
+            navigate('/auth/signin')
 
         }).catch((err)=>{
-            console.log('Err:', err)
+            setError(err.message)
+        }).finally(()=>{
+          setLoading(false)
         })
     }
   };
+
 
   return (
     <div>
@@ -70,6 +79,7 @@ function Signup() {
             <button type="submit" name="signup" onClick={authHandler}>
               Sign Up
             </button>
+            {loading ? <ClipLoader color={'#000'} size={15}/> : ''}
           </form>
           <p className={classes.terms}>
             By signing up, you agree to the Amazon Clone’s Conditions of Use,
@@ -82,6 +92,12 @@ function Signup() {
               <Link to="/auth/signin">Sign into your account</Link>
             </span>
           </p>
+          {
+            error &&  <small style={{
+              padding:"10px",
+              color:"red",
+            }}>{error}</small>
+          }
         </div>
       </section>
     </div>

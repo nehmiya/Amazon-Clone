@@ -1,9 +1,10 @@
-import React, { useState, useContext} from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useContext,} from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {auth} from '../../Utils/firebase'
 import {signInWithEmailAndPassword} from 'firebase/auth'
 import { DataContext } from "../../Components/DataProvider/DataProvider";
 import { Type } from "../../Utils/action.type";
+import { ClipLoader } from "react-spinners";
 import classes from "./Auth.module.css";
 
 
@@ -11,25 +12,31 @@ function Auth() {
   const [email,setEmail]= useState('')
   const [password,setPassword]= useState('')
   const [error,setError]= useState('')
+  const [loading,setLoading]= useState(false)
 
 
   const [{user},dispatch] = useContext(DataContext)
+  const navigate = useNavigate()
 
-  console.log(user)
 
   
   const authHandler= async(e)=>{
     e.preventDefault()
     
     if (e.target.name=="signin") {
+      setLoading(true)
       // Sign In Logic
       signInWithEmailAndPassword(auth, email, password).then((userCredential)=>{
         dispatch({
           type: Type.SET_USER,
           user: userCredential.user
         })
+        navigate('/')
+        
       }).catch((err)=>{
-        console.log('Err:' ,err)
+        setError(err.message)
+      }).finally(()=>{
+        setLoading(false)
       })
     }
 
@@ -72,6 +79,7 @@ function Auth() {
           </div>
 
           <button type="submit" name="signin" onClick={authHandler}>Sign In</button>
+          {loading ? <ClipLoader color={'#000'} size={15}/> : ''}
         </form>
         <p className={classes.terms}>
           By signing in, you agree to the Amazon Clone’s Conditions of Use,
@@ -84,6 +92,15 @@ function Auth() {
             <Link to="/auth/signup">Create your account</Link>
           </span>
         </p>
+        {
+          error &&  <small style={{
+            padding:"10px",
+            color:"red",
+          }}>{error}</small>
+        }
+        
+        
+        
       </div>
     </section>
   );

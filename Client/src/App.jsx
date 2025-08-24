@@ -1,16 +1,37 @@
-import './App.css'
-import Layout from './Components/Layout/Layout'
-import { Route ,Routes} from 'react-router'
-import Landing from './Pages/Landing/Landing'
-import Auth from './Pages/Auth/Auth'
-import Cart from './Pages/Cart/Cart'
-import Payment from './Pages/Payment/Payment'
-import Orders from './Pages/Orders/Orders'
-import Results from './Pages/Results/Results'
-import ProductDetail from './Pages/ProductDetail/ProductDetail'
-import Signup from './Pages/Auth/Signup'
+import { useContext, useEffect } from "react";
+import "./App.css";
+import Layout from "./Components/Layout/Layout";
+import { Route, Routes } from "react-router";
+import Landing from "./Pages/Landing/Landing";
+import Auth from "./Pages/Auth/Auth";
+import Cart from "./Pages/Cart/Cart";
+import Payment from "./Pages/Payment/Payment";
+import Orders from "./Pages/Orders/Orders";
+import Results from "./Pages/Results/Results";
+import ProductDetail from "./Pages/ProductDetail/ProductDetail";
+import Signup from "./Pages/Auth/Signup";
+import { DataContext } from "./Components/DataProvider/DataProvider";
+import { Type } from "./Utils/action.type";
+import { auth } from "./Utils/firebase";
 
 function App() {
+  const [{ user }, dispatch] = useContext(DataContext);
+  useEffect(() => {
+    auth.onAuthStateChanged((authUser)=>{
+      if (authUser) {
+        dispatch({
+          type: Type.SET_USER,
+          user: authUser
+        })
+      } else {
+         dispatch({
+           type: Type.SET_USER,
+           user: null,
+         });
+      }
+    })
+  }, []);
+
   return (
     <>
       <Routes>
@@ -30,4 +51,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
