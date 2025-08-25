@@ -20,6 +20,7 @@ export const reducer = (state, action) => {
 
                     return {
                         ...state,
+                        
                         basket: updateBasket
                     }
                 }}
