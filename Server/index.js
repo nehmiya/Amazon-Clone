@@ -1,6 +1,6 @@
-const {setGlobalOptions} = require("firebase-functions");
-const {onRequest} = require("firebase-functions/https");
-const logger = require("firebase-functions/logger");
+// const {setGlobalOptions} = require("firebase-functions");
+// const {onRequest} = require("firebase-functions/https");
+// const logger = require("firebase-functions/logger");
 const express = require("express")
 const cors = require("cors")
 const dotenv = require('dotenv');
@@ -8,6 +8,7 @@ dotenv.config()
 const stripe = require("stripe")(process.env.SSTRIPE_KEY);
 
 const app = express()
+const PORT = process.env.PORT 
 app.use(cors({origin:true}));
 app.use(express.json());
 
@@ -35,4 +36,9 @@ app.post('/payments/create',async (req,res)=>{
 })
 
 
-exports.api = onRequest(app);
+
+app.listen(PORT,()=>{
+    console.log(`The server is running on port ${PORT}`);
+})
+
+// exports.api = onRequest(app);
